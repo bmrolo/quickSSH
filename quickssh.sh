@@ -15,6 +15,8 @@ elif [[ "$destination" == "h" ]]; then
     checkPath="$HOME"
     cd $HOME
     ssh_key=$(fzf --height=~100% --layout=reverse-list --query ".pem$ !Library")
+elif [[ -z "${destination}" ]]; then
+    exit 1
 fi
 chmod 400 $ssh_key
 echo -n 'Enter Public IP: '
