@@ -1,3 +1,5 @@
+#!/bin/bash
+
 function quickssh() {
     echo "Where are you trying to go?"
     echo -n "| d = Most Recent Download | f = Search Downloads | h = Home |"
@@ -28,4 +30,4 @@ function quickssh() {
     echo "Using $(basename $ssh_key) as $vm_user to SSH into $ec2_ipaddress..."
     echo
     ssh -i $ssh_key $vm_user@$ec2_ipaddress
-    }
+}
