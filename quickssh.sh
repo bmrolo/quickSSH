@@ -18,6 +18,9 @@ elif [[ "$destination" == "h" ]]; then
 elif [[ -z "${destination}" ]]; then
     exit 1
 fi
+if [[ -z "${ssh_key}" ]]; then
+    echo "No SSH key selected! Exiting"
+    exit 1
 chmod 400 $ssh_key
 echo -n 'Enter Public IP: '
 read ec2_ipaddress
