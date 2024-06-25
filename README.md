@@ -12,5 +12,5 @@ To install quickSSH, run the following command:
 curl -s https://raw.githubusercontent.com/bmrolo/quickSSH/main/install.sh | bash
 ```
 
-#### fzf
+### fzf
 To use `quickssh`, you'll need to install [fzf](https://github.com/junegunn/fzf?tab=readme-ov-file#using-homebrew)
