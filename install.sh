@@ -4,7 +4,7 @@ SCRIPT_NAME="quickssh.sh"
 INSTALL_PATH="/usr/local/bin/quickssh"
 
 # Clone the repository silently
-if ! git clone "$REPO_URL" > /dev/null; then
+if ! git clone "$REPO_URL"; then
     echo "Failed to clone repository."
     exit 1
 fi
