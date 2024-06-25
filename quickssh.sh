@@ -16,6 +16,7 @@ elif [[ "$destination" == "h" ]]; then
     cd $HOME
     ssh_key=$(fzf --height=~100% --layout=reverse-list --query ".pem$ !Library")
 elif [[ -z "${destination}" ]]; then
+    echo "No destination selected! Exiting"
     exit 1
 fi
 if [[ -z "${ssh_key}" ]]; then
