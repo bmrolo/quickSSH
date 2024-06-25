@@ -23,7 +23,7 @@ if [[ -z "${ssh_key}" ]]; then
     echo "No SSH key selected! Exiting"
     exit 1
 fi
-chmod 400 $ssh_key
+chmod 400 "$ssh_key"
 echo -n 'Enter Public IP: '
 read ec2_ipaddress
 echo
@@ -35,4 +35,4 @@ fi
 echo
 echo "Using $(basename $ssh_key) as $vm_user to SSH into $ec2_ipaddress..."
 echo
-ssh -i $ssh_key $vm_user@$ec2_ipaddress
+ssh -i "$ssh_key" $vm_user@$ec2_ipaddress
