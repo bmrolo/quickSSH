@@ -21,6 +21,7 @@ fi
 if [[ -z "${ssh_key}" ]]; then
     echo "No SSH key selected! Exiting"
     exit 1
+fi
 chmod 400 $ssh_key
 echo -n 'Enter Public IP: '
 read ec2_ipaddress
