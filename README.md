@@ -22,3 +22,9 @@ To use quickSSH, type:
 quickssh
 ```
 quickSSH uses the most common directories `/Desktop` and `/Downloads` to locate `.pem` files. Use the menu in the command line to naviagate directories
+
+## Uninstallation
+To uninstall quickSSH, run the follow command:
+```sh
+sudo rm -rf /usr/local/bin/quickssh
+```
