@@ -33,6 +33,6 @@ if [ -z "$vm_user" ]; then
     vm_user="ec2-user"
 fi
 echo
-echo "Using $(basename $ssh_key) as $vm_user to SSH into $ec2_ipaddress..."
+echo "Using "$ssh_key" as $vm_user to SSH into $ec2_ipaddress..."
 echo
 ssh -i "$ssh_key" $vm_user@$ec2_ipaddress
