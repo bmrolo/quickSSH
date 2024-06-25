@@ -1,11 +1,10 @@
 #!/bin/bash
-
 REPO_URL="https://github.com/bmrolo/quickSSH.git"
 SCRIPT_NAME="quickssh.sh"
 INSTALL_PATH="/usr/local/bin/quickssh"
 
-# Clone the repository
-if ! git clone "$REPO_URL" > /dev/null 2>&1; then
+# Clone the repository silently
+if ! git clone --quiet "$REPO_URL" > /dev/null 2>&1; then
     echo "Failed to clone repository."
     exit 1
 fi
