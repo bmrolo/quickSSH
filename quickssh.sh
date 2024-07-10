@@ -77,14 +77,6 @@ elif [[ "$key_location" == "4" ]]; then
     else
         ssh_key=$(fzf --height=~100% --layout=reverse-list --query ".pem$ !Library")
     fi
-elif [[ "$key_location" == "h" ]]; then
-    checkPath="$HOME"
-    cd $HOME
-    if [ -n "${selected_key_name}" ]; then
-        ssh_key=$(fzf --height=~100% --layout=reverse-list --query ".pem$ !Library ${selected_key_name}")
-    else
-        ssh_key=$(fzf --height=~100% --layout=reverse-list --query ".pem$ !Library")
-    fi
 elif [[ -z "${key_location}" ]]; then
     echo "No key location selected! Exiting"
     exit 1
