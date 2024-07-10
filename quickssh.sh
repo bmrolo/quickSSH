@@ -44,16 +44,34 @@ if [ -z "$ec2_ipaddress" ]; then
 fi
 
 echo "Where is your SSH key located?"
-echo -n "| d = Most Recent Download | f = Search Downloads | h = Home |"
+echo -n "| 1 = Most Recent Download | 2 = Search Downloads | 3 = Home | 4 = Custom Path |"
 echo
 read key_location
 
-if [[ "$key_location" == "d" ]]; then
+if [[ "$key_location" == "1" ]]; then
     checkPath="$HOME/Downloads"
     ssh_key=$(ls -t $HOME/Downloads/*.pem | head -n 1)
-elif [[ "$key_location" == "f" ]]; then
+elif [[ "$key_location" == "2" ]]; then
     checkPath="$HOME/Downloads"
     cd $checkPath
+    if [ -n "${selected_key_name}" ]; then
+        ssh_key=$(fzf --height=~100% --layout=reverse-list --query ".pem$ !Library ${selected_key_name}")
+    else
+        ssh_key=$(fzf --height=~100% --layout=reverse-list --query ".pem$ !Library")
+    fi
+elif [[ "$key_location" == "3" ]]; then
+    checkPath="$HOME"
+    cd $HOME
+    if [ -n "${selected_key_name}" ]; then
+        ssh_key=$(fzf --height=~100% --layout=reverse-list --query ".pem$ !Library ${selected_key_name}")
+    else
+        ssh_key=$(fzf --height=~100% --layout=reverse-list --query ".pem$ !Library")
+    fi
+elif [[ "$key_location" == "4" ]]; then
+    echo -n "Enter the custom directory path: "
+    read custom_path
+    checkPath="$custom_path"
+    cd "$custom_path"
     if [ -n "${selected_key_name}" ]; then
         ssh_key=$(fzf --height=~100% --layout=reverse-list --query ".pem$ !Library ${selected_key_name}")
     else
