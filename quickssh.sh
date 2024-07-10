@@ -25,7 +25,6 @@ if [[ -n "${ssh_key}" ]]; then
     chmod 400 "$ssh_key"
     echo -n "Enter Public IP (or press Enter to search with AWS CLI): "
     read ec2_ipaddress
-    echo
     if [ -z "$ec2_ipaddress" ]; then
         # Check if AWS CLI is installed
         if ! command -v aws &> /dev/null; then
@@ -34,7 +33,7 @@ if [[ -n "${ssh_key}" ]]; then
         fi
 
         # Get the list of EC2 instances
-        instances=$(aws ec2 describe-instances --query 'Reservations[*].Instances[*].{Name:Tags[?Key==`Name`].Value | [0], InstanceId:InstanceId, KeyName:KeyName, PublicIpAddress:PublicIpAddress}' --output text)
+        instances=$(aws ec2 describe-instances --query 'Reservations[*].Instances[*].[Tags[?Key==`Name`].Value | [0], InstanceId, KeyName, PublicIpAddress]' --output text)
 
         # Check if there are any instances
         if [ -z "$instances" ]; then
@@ -48,7 +47,7 @@ if [[ -n "${ssh_key}" ]]; then
         while read -r instance; do
             instance_count=$((instance_count + 1))
             instance_details=($instance)
-            printf "%2d: NAME: %s  ID: %s  KEY: %s  IP: %s\n" "$instance_count" "${instance_details[2]}" "${instance_details[0]}" "${instance_details[1]}" "${instance_details[3]}"
+            printf "%2d: NAME: %s  ID: %s  KEY: %s  IP: %s\n" "$instance_count" "${instance_details[0]}" "${instance_details[1]}" "${instance_details[2]}" "${instance_details[3]}"
         done <<< "$instances"
 
         echo -n "Enter the instance number you want to connect to: "
