@@ -40,6 +40,7 @@ if [ -z "$ec2_ipaddress" ]; then
     selected_instance=$(echo "$instances" | awk -v line="$instance_number" 'NR == line')
     selected_instance_details=($selected_instance)
     ec2_ipaddress="${selected_instance_details[3]}"
+    selected_key_name="${selected_instance_details[2]}"
 fi
 
 echo "Where is your SSH key located?"
@@ -53,11 +54,19 @@ if [[ "$key_location" == "d" ]]; then
 elif [[ "$key_location" == "f" ]]; then
     checkPath="$HOME/Downloads"
     cd $checkPath
-    ssh_key=$(fzf --height=~100% --layout=reverse-list --query ".pem$ !Library")
+    if [ -n "${selected_key_name}" ]; then
+        ssh_key=$(fzf --height=~100% --layout=reverse-list --query ".pem$ !Library ${selected_key_name}")
+    else
+        ssh_key=$(fzf --height=~100% --layout=reverse-list --query ".pem$ !Library")
+    fi
 elif [[ "$key_location" == "h" ]]; then
     checkPath="$HOME"
     cd $HOME
-    ssh_key=$(fzf --height=~100% --layout=reverse-list --query ".pem$ !Library")
+    if [ -n "${selected_key_name}" ]; then
+        ssh_key=$(fzf --height=~100% --layout=reverse-list --query ".pem$ !Library ${selected_key_name}")
+    else
+        ssh_key=$(fzf --height=~100% --layout=reverse-list --query ".pem$ !Library")
+    fi
 elif [[ -z "${key_location}" ]]; then
     echo "No key location selected! Exiting"
     exit 1
