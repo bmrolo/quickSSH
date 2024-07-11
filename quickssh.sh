@@ -91,7 +91,7 @@ elif [[ "$key_location" == "4" ]]; then
 fi
 
 if [[ -n "${ssh_key}" ]]; then
-    chmod u+r "$ssh_key"
+    chmod 400 "$ssh_key"
     echo -n 'Enter User: (Press Enter for ec2-user) '
     read vm_user
     if [ -z "$vm_user" ]; then
