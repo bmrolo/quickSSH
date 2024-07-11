@@ -74,10 +74,6 @@ elif [[ "$key_location" == "4" ]]; then
     cd "$custom_path"
     get_ssh_key
 fi
-elif [[ -z "${key_location}" ]]; then
-    echo "No key location selected! Exiting"
-    exit 1
-fi
 
 if [[ -n "${ssh_key}" ]]; then
     chmod 400 "$ssh_key"
