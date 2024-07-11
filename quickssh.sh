@@ -48,35 +48,32 @@ echo -n "| 1 = Most Recent Download | 2 = Search Downloads | 3 = Home | 4 = Cust
 echo
 read key_location
 
+get_ssh_key() {
+    if [ -n "${selected_key_name}" ]; then
+        ssh_key=$(fzf --height=~100% --layout=reverse-list --query ".pem$ !Library ${selected_key_name}")
+    else
+        ssh_key=$(fzf --height=~100% --layout=reverse-list --query ".pem$ !Library")
+    fi
+}
+
 if [[ "$key_location" == "1" ]]; then
     checkPath="$HOME/Downloads"
     ssh_key=$(ls -t $HOME/Downloads/*.pem | head -n 1)
 elif [[ "$key_location" == "2" ]]; then
     checkPath="$HOME/Downloads"
     cd $checkPath
-    if [ -n "${selected_key_name}" ]; then
-        ssh_key=$(fzf --height=~100% --layout=reverse-list --query ".pem$ !Library ${selected_key_name}")
-    else
-        ssh_key=$(fzf --height=~100% --layout=reverse-list --query ".pem$ !Library")
-    fi
+    get_ssh_key
 elif [[ "$key_location" == "3" ]]; then
     checkPath="$HOME"
     cd $HOME
-    if [ -n "${selected_key_name}" ]; then
-        ssh_key=$(fzf --height=~100% --layout=reverse-list --query ".pem$ !Library ${selected_key_name}")
-    else
-        ssh_key=$(fzf --height=~100% --layout=reverse-list --query ".pem$ !Library")
-    fi
+    get_ssh_key
 elif [[ "$key_location" == "4" ]]; then
     echo -n "Enter the custom directory path: "
     read custom_path
     checkPath="$custom_path"
     cd "$custom_path"
-    if [ -n "${selected_key_name}" ]; then
-        ssh_key=$(fzf --height=~100% --layout=reverse-list --query ".pem$ !Library ${selected_key_name}")
-    else
-        ssh_key=$(fzf --height=~100% --layout=reverse-list --query ".pem$ !Library")
-    fi
+    get_ssh_key
+fi
 elif [[ -z "${key_location}" ]]; then
     echo "No key location selected! Exiting"
     exit 1
