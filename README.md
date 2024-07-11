@@ -2,7 +2,7 @@
 A command line tool that does no more than it needs to.
 
 ## What is quickSSH?
-A shell script that enables faster SSH into an EC2 instance
+A CLI tool that enables faster SSH into an EC2 instance
 
 ## Dependencies
 - [fzf](https://github.com/junegunn/fzf?tab=readme-ov-file#using-homebrew) - Used to quickly select directories
