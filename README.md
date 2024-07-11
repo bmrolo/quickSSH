@@ -24,6 +24,6 @@ To use quickSSH, type:
 ```sh
 quickssh
 ```
-quickSSH uses the most common directories `/Downloads` and `$HOME` to locate `.pem` files. Use the menu in the command line to naviagate directories
+quickSSH uses the most common directories `/Downloads` and `$HOME` to locate `.pem` files. Use the menu in the command line to naviagate directories, and utilize the directory of your choosing
 
 
