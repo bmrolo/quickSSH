@@ -5,7 +5,8 @@ A command line tool that does no more than it needs to.
 A shell script that enables faster SSH into an EC2 instance
 
 ## Dependencies
-- [fzf](https://github.com/junegunn/fzf?tab=readme-ov-file#using-homebrew) - Used to quickly select directories 
+- [fzf](https://github.com/junegunn/fzf?tab=readme-ov-file#using-homebrew) - Used to quickly select directories
+- [jq](https://github.com/jqlang/jq) - Used to parse JSON output from awscli
 
 ## Installation
 
