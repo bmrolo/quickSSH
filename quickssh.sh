@@ -21,7 +21,7 @@ if [ -z "$ec2_ipaddress" ]; then
     fi
 
     # Get the list of EC2 instances
-    instances=$(aws ec2 describe-instances --query 'Reservations[].Instances[].[Tags[?Key==`Name`].Value | [0], InstanceId, KeyName, PublicIpAddress]' --output json)
+    instances=$(aws ec2 describe-instances --filters "Name=instance-state-name,Values=running" --query 'Reservations[].Instances[].[Tags[?Key==`Name`].Value | [0], InstanceId, KeyName, PublicIpAddress]' --output json)
     num_instances=$(($(echo "$instances" | jq length)))
 
     # Check if there are any instances
