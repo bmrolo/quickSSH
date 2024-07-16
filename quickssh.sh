@@ -59,7 +59,7 @@ if [ -z "$ec2_ipaddress" ]; then
 fi
 
 echo "Where is your SSH key located?"
-echo -n "| 1 = Most Recent Download | 2 = Search Downloads | 3 = Home | 4 = Custom Path |"
+echo -n "| 1 = Most Recent Download | 2 = Search Downloads | 3 = Current Directory | 4 = Custom Path |"
 echo
 read key_location
 
@@ -79,7 +79,7 @@ elif [[ "$key_location" == "2" ]]; then
     cd $checkPath
     get_ssh_key
 elif [[ "$key_location" == "3" ]]; then
-    checkPath="$HOME"
+    checkPath="$PWD"
     cd $checkPath
     get_ssh_key
 elif [[ "$key_location" == "4" ]]; then
