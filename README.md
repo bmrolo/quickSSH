@@ -22,7 +22,7 @@ To use quickSSH, type:
 ```sh
 quickssh
 ```
-quickSSH uses user-defined directories to locate `.pem` files. Use the menu in the command line to naviagate directories, and utilize the directory of your choosing
+quickSSH uses user-defined directories to locate `.pem` files. Use the menu in the command line to navigate directories, and utilize the directory of your choosing
 
 ## Configuration
 To save custom directories that quickSSH can read, edit `~/.quickssh` using the following syntax:
