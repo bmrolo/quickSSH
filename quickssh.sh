@@ -64,24 +64,28 @@ get_ssh_key() {
     fi
 }
 
-if [[ "$key_location" == "1" ]]; then
-    checkPath="$HOME/Downloads"
-    ssh_key=$(ls -t $HOME/Downloads/*.pem | head -n 1)
-elif [[ "$key_location" == "2" ]]; then
-    checkPath="$HOME/Downloads"
-    cd $checkPath
-    get_ssh_key
-elif [[ "$key_location" == "3" ]]; then
-    checkPath="$PWD"
-    cd $checkPath
-    get_ssh_key
-elif [[ "$key_location" == "4" ]]; then
-    echo -n "Enter the custom directory path: "
-    read custom_path
-    checkPath="$custom_path"
-    cd "$custom_path"
-    get_ssh_key
-fi
+case "$key_location" in
+    1)
+        checkPath="$HOME/Downloads"
+        ssh_key=$(ls -t "$HOME/Downloads"/*.pem | head -n 1)
+        ;;
+    2)
+        checkPath="$HOME/Downloads"
+        cd "$checkPath" || exit
+        get_ssh_key
+        ;;
+    3)
+        checkPath="$PWD"
+        get_ssh_key
+        ;;
+    4)
+        echo -n "Enter the custom directory path: "
+        read custom_path
+        checkPath="$custom_path"
+        cd "$checkPath" || exit
+        get_ssh_key
+        ;;
+esac
 
 if [[ -n "${ssh_key}" ]]; then
     chmod 400 "$ssh_key"
