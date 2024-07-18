@@ -1,25 +1,18 @@
 #!/bin/bash
 
-# Check Dependencies
-if ! command -v fzf &> /dev/null; then
-    echo "fzf is not installed. Please install it first."
-    exit 1
-fi
+# Check all dependencies
+dependencies=("fzf" "jq" "aws")
+for dep in "${dependencies[@]}"; do
+    if ! command -v "$dep" &> /dev/null; then
+        echo "$dep is not installed. Please install it first."
+        exit 1
+    fi
+done
 
-if ! command -v jq &> /dev/null; then
-    echo "jq is not installed. Please install it first."
-    exit 1
-fi
 
 echo -n "Enter Public IP (or press Enter to search with AWS CLI): "
 read ec2_ipaddress
 if [ -z "$ec2_ipaddress" ]; then
-    # Check if AWS CLI is installed
-    if ! command -v aws &> /dev/null; then
-        echo "AWS CLI is not installed. Please install it first."
-        exit 1
-    fi
-
     # Get the list of EC2 instances
     instances=$(aws ec2 describe-instances --filters "Name=instance-state-name,Values=running" --query 'Reservations[].Instances[].[Tags[?Key==`Name`].Value | [0], InstanceId, KeyName, PublicIpAddress]' --output json)
     num_instances=$(($(echo "$instances" | jq length)))
