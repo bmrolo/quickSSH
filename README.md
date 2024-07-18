@@ -13,9 +13,9 @@ curl -s https://raw.githubusercontent.com/bmrolo/quickSSH/main/install.sh | bash
 To uninstall quickSSH, run `sudo rm -rf /usr/local/bin/quickssh`
 
 ## Dependencies
+- [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html) - Used to interact with AWS services. Install instructions are found in documentation 
 - [fzf](https://github.com/junegunn/fzf?tab=readme-ov-file#using-homebrew) - Used to quickly select directories - `brew install fzf`
 - [jq](https://github.com/jqlang/jq) - Used to parse JSON output from awscli - `brew install jq`
-- [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html) - Used to interact with AWS services. Install instructions are found in documentation 
 
 ## Usage
 To use quickSSH, type:
