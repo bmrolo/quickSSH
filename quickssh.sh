@@ -9,6 +9,20 @@ for dep in "${dependencies[@]}"; do
     fi
 done
 
+# Check if .quickssh file exists, and create it if not
+if [ ! -f ~/.quickssh ]; then
+    touch ~/.quickssh
+fi
+
+# Read .ssh_dirs file
+declare -a aliases
+declare -a paths
+while IFS='=' read -r alias path; do
+    if ! [[ " ${aliases[*]} " =~ " ${alias} " ]]; then
+        aliases+=("$alias")
+        paths+=("$path")
+    fi
+done < ~/.quickssh
 
 echo -n "Enter Public IP (or press Enter to search with AWS CLI): "
 read ec2_ipaddress
@@ -48,11 +62,17 @@ if [ -z "$ec2_ipaddress" ]; then
     selected_instance=$(echo "$instances" | jq -r ".[$instance_number-1]")
     ec2_ipaddress=$(echo "$selected_instance" | jq -r ".[3]")
     selected_key_name=$(echo "$selected_instance" | jq -r ".[2]")
-
 fi
 
 echo "Where is your SSH key located?"
-echo -n "| 1 = Most Recent Download | 2 = Search Downloads | 3 = Current Directory | 4 = Custom Path |"
+echo -n "| 1 = Most Recent Download | 2 = Current Directory |"
+
+# Print options for .ssh_dirs aliases
+i=2
+for alias in "${aliases[@]}"; do
+    i=$((i+1))
+    echo -n " $i = $alias |"
+done
 echo
 read key_location
 
@@ -70,20 +90,21 @@ case "$key_location" in
         ssh_key=$(ls -t "$HOME/Downloads"/*.pem | head -n 1)
         ;;
     2)
-        checkPath="$HOME/Downloads"
-        cd "$checkPath" || exit
-        get_ssh_key
-        ;;
-    3)
         checkPath="$PWD"
         get_ssh_key
         ;;
-    4)
-        echo -n "Enter the custom directory path: "
-        read custom_path
-        checkPath="$custom_path"
-        cd "$checkPath" || exit
-        get_ssh_key
+    *)
+        # Check if the selected option corresponds to an alias
+        index=$((key_location - 3))
+        if [[ "$index" -ge 0 && "$index" -lt "${#aliases[@]}" ]]; then
+            checkPath="${paths[$index]}"
+            checkPath="${checkPath/#\~/$HOME}"  # Expand tilde in path
+            cd "$checkPath" || exit
+            get_ssh_key
+        else
+            echo "Invalid option selected."
+            exit 1
+        fi
         ;;
 esac
 
