@@ -67,7 +67,7 @@ fi
 echo "Where is your SSH key located?"
 echo -n "| 1 = Most Recent Download | 2 = Current Directory |"
 
-# Print options for .ssh_dirs aliases
+# Print options for .quickssh aliases
 i=2
 for alias in "${aliases[@]}"; do
     i=$((i+1))
