@@ -1,6 +1,6 @@
 # quickSSH
 - A command line tool that does no more than it needs to
-- quickSSH is CLI tool that enables faster SSH into an EC2 instance
+- quickSSH is a CLI tool that enables faster SSH into an EC2 instance
 
 ## Installation
 
